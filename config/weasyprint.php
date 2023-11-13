@@ -8,11 +8,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option contains settings for PDF generation.
-    |
-    | Enabled:
-    |
-    |    Whether to load PDF / Image generation.
-    |
+    |    |
     | Binary:
     |
     |    The file path of the WeasyPrint executable.
@@ -24,7 +20,7 @@ return [
     |
     | Options:
     |
-    |    The WeasyPrint command options.
+    |    The WeasyPrint command options. See https://github.com/pontedilana/php-weasyprint#pass-options-to-phpweasyprint
     |
     | Env:
     |
