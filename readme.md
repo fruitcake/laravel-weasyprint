@@ -44,47 +44,62 @@ You can create a new WeasyPrint instance and load an HTML string, file or view n
 Using the App container:
 
 ```php
-$weasy = App::make(Fruitcake\WeasyPrint\WeasyPrint::class);
-//To file
-$html = '<h1>Bill</h1><p>You owe me money, dude.</p>';
-$weasy->generateFromHtml($html, '/tmp/bill-123.pdf');
-$weasy->generate('http://www.github.com', '/tmp/github.pdf');
-//Or output:
-return new Response(
-    $weasy->getOutputFromHtml($html),
-    200,
-    array(
-        'Content-Type'          => 'application/pdf',
-        'Content-Disposition'   => 'attachment; filename="file.pdf"'
-    )
-);
+<?php
+
+namespace App\Http\Controllers;
+
+use Pontedilana\PhpWeasyPrint\Pdf;
+
+class PdfController extends Controller
+{
+    public function __invoke(Pdf $weasyPrint)
+    {
+
+        //To file
+        $html = '<h1>Bill</h1><p>You owe me money, dude.</p>';
+        $weasyPrint->generateFromHtml($html, '/tmp/bill-123.pdf');
+        $weasyPrint->generate('https://laravel.com/docs/10.x', '/tmp/laravel-docs.pdf');
+        
+        //Or output:
+        return response(
+            $weasyPrint->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )
+        );
+    }
+}
+
 ```
 
-Using the wrapper:
+Or use the Facade to access easy helper methods.
+
+Inline a PDF:
 
 ```php
-$pdf = App::make('weasyprint.pdf.wrapper');
-$pdf->loadHTML('<h1>Test</h1>');
+$pdf = \WeasyPrint::loadHTML('<h1>Test</h1>');
 return $pdf->inline();
 ```
 
-Or use the facade:
+Or download:
 
 ```php
-$pdf = WeasyPrint::loadView('pdf.invoice', $data);
+$pdf = \WeasyPrint::loadView('pdf.invoice', $data);
 return $pdf->download('invoice.pdf');
 ```
 
 You can chain the methods:
 
 ```php
-return WeasyPrint::loadFile('http://www.github.com')->inline('github.pdf');
+return \WeasyPrint::loadFile('https://laravel.com/docs')->inline('laravel.pdf');
 ```
 
 You can change the orientation and paper size
 
 ```php
-WeasyPrint::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
+\WeasyPrint::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
 ```
 
 If you need the output as a string, you can get the rendered PDF with the output() function, so you can save/output it yourself.
