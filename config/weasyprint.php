@@ -20,7 +20,8 @@ return [
     |
     | Options:
     |
-    |    The WeasyPrint command options. See https://github.com/pontedilana/php-weasyprint#pass-options-to-phpweasyprint
+    |    The WeasyPrint command options.
+    |    See https://doc.courtbouillon.org/weasyprint/latest/api_reference.html#command-line-api
     |
     | Env:
     |
@@ -31,7 +32,31 @@ return [
     'pdf' => [
         'binary'  => env('WEASYPRINT_BINARY', '/usr/local/bin/weasyprint'),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'encoding' => null,
+            'stylesheet' => [],
+            'media-type' => null,
+            'base-url' => null,
+            'attachment' => [], 
+            'presentational-hints' => null,
+            'pdf-identifier' => null,
+            'pdf-variant' => null,
+            'pdf-version' => null,
+            'pdf-forms' => null,
+            'custom-metadata' => null,
+            'uncompressed-pdf' => null,
+            'full-fonts' => null,
+            'hinting' => null,
+            'dpi' => null,
+            'jpeg-quality' => null,
+            'optimize-images' => null,
+            'cache-folder' => null,
+            'timeout' => null,
+            // Deprecated
+            'format' => null,
+            'resolution' => null,
+            'optimize-size' => null,
+        ],
         'env'     => [],
     ],
 ];
