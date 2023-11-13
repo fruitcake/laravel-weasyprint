@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [8.2, 8.1, 8.0]
+        laravel: [10.*, 9.*]
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - laravel: 10.*
+            php: 8.0
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install wkthtmltopdf
+        run: |
+          sudo apt-get install -y xfonts-base xfonts-75dpi
+          wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
+          sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          extensions: mbstring
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-update --no-progress
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
+
+      - name: Execute Unit Tests
+        run: composer test

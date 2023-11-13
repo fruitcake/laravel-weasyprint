@@ -1,0 +1,57 @@
+{
+    "name": "fruitcake/laravel-weasyprint",
+    "description": "WeasyPrint for Laravel",
+    "keywords": ["laravel", "weasyprint", "pdf"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fruitcake",
+            "homepage": "https://fruitcake.nl"
+        },
+        {
+            "name": "Barry vd. Heuvel",
+            "email": "barry@fruitcake.nl"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "illuminate/support": "^9|^10",
+        "illuminate/filesystem": "^9|^10",
+        "pontedilana/php-weasyprint": "^1.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7|^8",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fruitcake\\WeasyPrint\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fruitcake\\WeasyPrint\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Fruitcake\\WeasyPrint\\WeasyPrintProvider"
+            ],
+            "aliases": {
+                "WeasyPrint": "Fruitcake\\WeasyPrint\\WeasyPrint"
+            }
+        }
+    },
+    "scripts": {
+        "actions": "composer test && composer check-style",
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR12 --exclude=Generic.Files.LineLength --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR12 --exclude=Generic.Files.LineLength --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
