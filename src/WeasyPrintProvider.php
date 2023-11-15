@@ -37,7 +37,7 @@ class WeasyPrintProvider extends BaseServiceProvider
             $timeout = $app['config']->get('weasyprint.pdf.timeout', false);
 
             $weasy = new IlluminateWeasyPrintPdf($app['files'], $binary, $options, $env);
-            if (false !== $timeout) {
+            if ($timeout && is_int($timeout)) {
                 $weasy->setTimeout($timeout);
             }
 
