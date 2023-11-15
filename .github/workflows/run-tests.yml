@@ -31,8 +31,8 @@ jobs:
 
       - name: Install weasyprint
         run: |
-          apk add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango
-          pip install weasyprint
+          sudo apt install python3-pip python3-cffi python3-brotli libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+          sudo pip install weasyprint
           weasyprint --info
           whereis weasyprint
 
