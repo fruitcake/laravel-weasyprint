@@ -33,6 +33,7 @@ jobs:
         run: |
           sudo apt-get install -y weasyprint
           whereis weasyprint
+          weasyprint --version
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
