@@ -31,9 +31,10 @@ jobs:
 
       - name: Install weasyprint
         run: |
-          sudo apt-get install -y weasyprint
+          apk add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango
+          pip install weasyprint
+          weasyprint --info
           whereis weasyprint
-          weasyprint --version
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
