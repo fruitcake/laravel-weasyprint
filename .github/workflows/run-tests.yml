@@ -19,12 +19,9 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.2, 8.1, 8.0]
+        php: [8.3, 8.2, 8.1]
         laravel: [10.*, 9.*]
         dependency-version: [prefer-lowest, prefer-stable]
-        exclude:
-          - laravel: 10.*
-            php: 8.0
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -32,11 +29,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install wkthtmltopdf
+      - name: Install weasyprint
         run: |
-          sudo apt-get install -y xfonts-base xfonts-75dpi
-          wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb
-          sudo dpkg -i wkhtmltox_0.12.6-1.bionic_amd64.deb
+          sudo apt-get install -y weasyprint
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
