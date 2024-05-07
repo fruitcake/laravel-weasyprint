@@ -34,7 +34,7 @@ composer require fruitcake/laravel-weasyprint
 You can publish the config file:
 
 ```bash
-php artisan vendor:publish --provider="Fruitcake\WeasyPrint\ServiceProvider"
+php artisan vendor:publish --provider="Fruitcake\WeasyPrint\WeasyPrintProvider"
 ```
 
 ### Usage
