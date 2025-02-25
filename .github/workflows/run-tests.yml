@@ -35,8 +35,8 @@ jobs:
       - name: Install weasyprint
         run: |
           sudo apt-get update
-          sudo apt install python3-pip python3-cffi python3-brotli libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 pydyf=0.10.0
-          sudo pip install weasyprint=61.2
+          sudo apk add py3-pip so:libgobject-2.0.so.0 so:libpango-1.0.so.0 so:libharfbuzz.so.0 so:libharfbuzz-subset.so.0 so:libfontconfig.so.1 so:libpangoft2-1.0.so.0
+          sudo pip install weasyprint
           weasyprint --info
           whereis weasyprint
 
