@@ -7,8 +7,6 @@ on:
   pull_request:
     branches:
       - "*"
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   php-tests:
@@ -19,11 +17,13 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.3, 8.2, 8.1]
-        laravel: [11.*, 10.*, 9.*]
-        dependency-version: [prefer-lowest, prefer-stable]
+        php: [8.4, 8.3, 8.2, 8.1]
+        laravel: [12.*, 11.*, 10.*, 9.*]
+        dependency-version: [prefer-stable]
         exclude:
           - laravel: 11.*
+            php: 8.1
+          - laravel: 12.*
             php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
@@ -32,10 +32,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' 
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install Pillow numpy filetype setuptools wheel twine
+
       - name: Install weasyprint
         run: |
-          sudo apt install python3-pip python3-cffi python3-brotli libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
-          sudo pip install weasyprint
+          pip install -r requirements.txt
           weasyprint --info
           whereis weasyprint
 
@@ -52,4 +61,6 @@ jobs:
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
       - name: Execute Unit Tests
-        run: composer test
+        run: |
+          export WEASYPRINT_BINARY=weasyprint
+          composer test
