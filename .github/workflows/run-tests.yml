@@ -61,4 +61,6 @@ jobs:
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
       - name: Execute Unit Tests
-        run: composer test
+        run: |
+          export WEASYPRINT_BINARY=weasyprint
+          composer test
