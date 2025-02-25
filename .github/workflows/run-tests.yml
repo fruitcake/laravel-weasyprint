@@ -39,7 +39,7 @@ jobs:
       - name: Install weasyprint
         run: |
           sudo apt-get update
-          sudo pip install weasyprint
+          sudo pip -Iv install weasyprint==64.1
           weasyprint --info
 
       - name: Setup PHP
