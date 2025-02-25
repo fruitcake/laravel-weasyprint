@@ -1,8 +1,8 @@
 ## WeasyPrint PDF Wrapper for Laravel
-[![Tests](https://github.com/fruitcake/laravel-weasyprint/workflows/Tests/badge.svg)](https://github.com/fruitcake/laravel-weasyprint/actions)
-[![Packagist License](https://poser.pugx.org/fruitcake/laravel-weasyprint/license.png)](http://choosealicense.com/licenses/mit/)
-[![Latest Stable Version](https://poser.pugx.org/fruitcake/laravel-weasyprint/version.png)](https://packagist.org/packages/fruitcake/laravel-weasyprint)
-[![Total Downloads](https://poser.pugx.org/fruitcake/laravel-weasyprint/d/total.png)](https://packagist.org/packages/fruitcake/laravel-weasyprint)
+[![Tests](https://github.com/fruitcake/laravel-weasyprint/actions/workflows/run-tests.yml/badge.svg)](https://github.com/fruitcake/laravel-weasyprint/actions/workflows/run-tests.yml)
+[![Packagist License](https://img.shields.io/badge/Licence-MIT-blue)](http://choosealicense.com/licenses/mit/)
+[![Latest Stable Version](https://img.shields.io/packagist/v/fruitcake/laravel-weasyprint?label=Stable)](https://packagist.org/packages/fruitcake/laravel-weasyprint)
+[![Total Downloads](https://img.shields.io/packagist/dt/fruitcake/laravel-weasyprint?label=Downloads)](https://packagist.org/packages/fruitcake/laravel-weasyprint)
 [![Fruitcake](https://img.shields.io/badge/Powered%20By-Fruitcake-b2bc35.svg)](https://fruitcake.nl/)
 
 This package is a ServiceProvider for WeasyPrint: [https://github.com/pontedilana/php-weasyprint](https://github.com/pontedilana/php-weasyprint).
