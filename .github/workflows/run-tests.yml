@@ -39,6 +39,7 @@ jobs:
 
       - name: Install weasyprint
         run: |
+          pip install -r requirements.txt
           weasyprint --info
 
       - name: Setup PHP
