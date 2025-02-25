@@ -32,13 +32,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v5
+        with:
+          cache: 'pip' # caching pip dependencies
+
       - name: Install weasyprint
         run: |
           sudo apt-get update
-          sudo apt install python3-pip libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz-subset0
           sudo pip install weasyprint
           weasyprint --info
-          whereis weasyprint
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
