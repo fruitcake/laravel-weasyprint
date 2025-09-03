@@ -43,6 +43,7 @@ return [
             'pdf-variant' => null,  // A PDF variant name.
             'pdf-version' => null,  // A PDF version number.
             'pdf-forms' => null,    // (bool) Whether PDF forms have to be included.
+            'pdf-tags' => null,
             'custom-metadata' => null,
             'uncompressed-pdf' => null, //Whether PDF content should be compressed.
             'full-fonts' => null,
@@ -52,10 +53,6 @@ return [
             'optimize-images' => null,
             'cache-folder' => null,
             'timeout' => null,
-            // Deprecated
-            'format' => null,
-            'resolution' => null,
-            'optimize-size' => null,
         ],
         'env'     => [],
     ],
