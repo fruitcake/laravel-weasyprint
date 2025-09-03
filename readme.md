@@ -96,10 +96,24 @@ You can chain the methods:
 return \WeasyPrint::loadFile('https://laravel.com/docs')->inline('laravel.pdf');
 ```
 
-You can change the orientation and paper size
+You can change the footer, orientation and paper size using the `@page` in you stylesheets
 
 ```php
-\WeasyPrint::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
+@page {
+    size: A4;
+    margin: 1cm;
+    @bottom-right{
+        content: "Page " counter(page) " of " counter(pages);
+    }
+}
+
+```
+
+```php
+@page {
+    size: A6 landscape;
+    margin: 1cm;
+}
 ```
 
 If you need the output as a string, you can get the rendered PDF with the output() function, so you can save/output it yourself.
