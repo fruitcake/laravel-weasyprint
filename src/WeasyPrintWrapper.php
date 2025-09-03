@@ -66,47 +66,6 @@ class WeasyPrintWrapper
     }
 
     /**
-     * Set the paper size (default A4)
-     *
-     * @param  string $paper
-     * @param  string $orientation
-     * @return $this
-     */
-    public function setPaper($paper, $orientation = null)
-    {
-        $this->weasy->setOption('page-size', $paper);
-        if ($orientation) {
-            $this->weasy->setOption('orientation', $orientation);
-        }
-        return $this;
-    }
-
-    /**
-     * Set the orientation (default portrait)
-     *
-     * @param  string $orientation
-     * @return $this
-     */
-    public function setOrientation($orientation)
-    {
-        $this->weasy->setOption('orientation', $orientation);
-        return $this;
-    }
-
-    /**
-     * Show or hide warnings
-     *
-     * @param bool $warnings
-     * @return $this
-     * @deprecated
-     */
-    public function setWarnings($warnings)
-    {
-        //Doesn't do anything
-        return $this;
-    }
-
-    /**
      * @param  string $name
      * @param  mixed $value
      * @return $this
