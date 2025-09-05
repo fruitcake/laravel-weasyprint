@@ -46,7 +46,19 @@ class WeasyPrintProvider extends BaseServiceProvider
         $this->app->alias('weasyprint.pdf', Pdf::class);
 
         $this->app->bind('weasyprint.pdf.wrapper', function ($app) {
-            return new WeasyPrintWrapper($app['weasyprint.pdf']);
+            $pageSize = $app['config']->get('weasyprint.pdf.page.size');
+            $pageOrientation = $app['config']->get('weasyprint.pdf.page.orientation');
+
+            $wrapper = new WeasyPrintWrapper($app['weasyprint.pdf']);
+
+            if ($pageSize) {
+                $wrapper->setPaper($pageSize);
+            }
+            if ($pageOrientation) {
+                $wrapper->setOrientation($pageOrientation);
+            }
+
+            return $wrapper;
         });
         $this->app->alias('weasyprint.pdf.wrapper', WeasyPrintWrapper::class);
     }
