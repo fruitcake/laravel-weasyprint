@@ -3,6 +3,7 @@
 namespace Fruitcake\WeasyPrint;
 
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Contracts\Support\Renderable;
 use Pontedilana\PhpWeasyPrint\Pdf;
@@ -62,6 +63,34 @@ class WeasyPrintWrapper
     public function setTemporaryFolder($path)
     {
         $this->weasy->setTemporaryFolder($path);
+        return $this;
+    }
+
+    /**
+     * Set the paper size
+     *
+     * @param  string $paper
+     * @param  string $orientation
+     * @return $this
+     */
+    public function setPaper($paper, $orientation = null)
+    {
+        $this->options['page-size'] =  $paper;
+        if ($orientation) {
+            $this->options['orientation'] =  $orientation;
+        }
+        return $this;
+    }
+
+    /**
+     * Set the orientation (default portrait)
+     *
+     * @param  string $orientation
+     * @return $this
+     */
+    public function setOrientation($orientation)
+    {
+        $this->options['orientation'] =  $orientation;
         return $this;
     }
 
@@ -134,6 +163,25 @@ class WeasyPrintWrapper
     }
 
     /**
+     * Parse page options to stylesheet
+     * @return array|array[]
+     */
+    protected function prepareOptions()
+    {
+        $options = $this->options;
+
+        $pageSize = $options['page-size'] ?? null;
+        $orientation = $options['orientation'] ?? null;
+
+        if (!$pageSize && !$orientation) {
+            return [];
+        }
+
+        return [
+            'stylesheet' => ["@page{ size: {$pageSize} {$orientation}; }"],
+        ];
+    }
+    /**
      * Output the PDF as a string.
      *
      * @return string The rendered PDF as string
@@ -142,11 +190,11 @@ class WeasyPrintWrapper
     public function output()
     {
         if ($this->html) {
-            return $this->weasy->getOutputFromHtml($this->html, $this->options);
+            return $this->weasy->getOutputFromHtml($this->html, $this->prepareOptions());
         }
 
         if ($this->file) {
-            return $this->weasy->getOutput($this->file, $this->options);
+            return $this->weasy->getOutput($this->file, $this->prepareOptions());
         }
 
         throw new \InvalidArgumentException('PDF Generator requires a html or file in order to produce output.');
@@ -162,9 +210,9 @@ class WeasyPrintWrapper
     {
 
         if ($this->html) {
-            $this->weasy->generateFromHtml($this->html, $filename, $this->options, $overwrite);
+            $this->weasy->generateFromHtml($this->html, $filename, $this->prepareOptions(), $overwrite);
         } elseif ($this->file) {
-            $this->weasy->generate($this->file, $filename, $this->options, $overwrite);
+            $this->weasy->generate($this->file, $filename, $this->prepareOptions(), $overwrite);
         }
 
         return $this;
