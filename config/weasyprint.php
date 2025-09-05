@@ -32,6 +32,10 @@ return [
     'pdf' => [
         'binary'  => env('WEASYPRINT_BINARY', '/usr/local/bin/weasyprint'),
         'timeout' => 10,    // Default timeout is 10 seconds
+        'page' => [     // By default uses @page { size: <format> <orientation> }, eg 'size: A4 landscape'
+            'size' => null,
+            'orientation' => null,
+        ],
         'options' => [
             'encoding' => null,
             'stylesheet' => [], //An optional list of user stylesheets. The list can include are CSS objects, filenames, URLs, or file-like objects.s
