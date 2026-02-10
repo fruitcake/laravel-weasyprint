@@ -45,7 +45,7 @@ class WeasyPrintProvider extends BaseServiceProvider
             if (null === $timeout) {
             	$weasy->disableTimeout();
             }
-            
+
             return $weasy;
         });
         $this->app->alias('weasyprint.pdf', Pdf::class);

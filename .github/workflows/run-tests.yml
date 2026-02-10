@@ -17,8 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.4, 8.3, 8.2, 8.1]
-        laravel: [12.*, 11.*, 10.*, 9.*]
+        php: [8.4, 8.3, 8.2]
+        laravel: [12.*, 11.*]
         dependency-version: [prefer-stable]
         exclude:
           - laravel: 11.*
@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13' 
+          python-version: '3.13'
           cache: 'pip' # caching pip dependencies
 
       - name: Install Dependencies
