@@ -33,7 +33,7 @@ class WeasyPrintDriver implements PdfDriver
     ): void {
         $html = $this->mergeHeaderFooter($html, $headerHtml, $footerHtml);
 
-        $this->weasy->generateFromHtml($html, $path, $this->prepareOptions($options));
+        $this->weasy->generateFromHtml($html, $path, $this->prepareOptions($options), true);
     }
 
     /**
@@ -62,13 +62,11 @@ class WeasyPrintDriver implements PdfDriver
             : '';
 
         if (preg_match('/<body([^>]*)>/i', $html, $matches)) {
-            $html = preg_replace(
+            return preg_replace(
                 '/<body([^>]*)>/i',
                 '<body$1>'.$headerBlock.$footerBlock,
                 $html,
             );
-
-            return $html;
         }
 
         return $headerBlock.$footerBlock.$html;
