@@ -2,6 +2,7 @@
 
 namespace Fruitcake\WeasyPrint;
 
+use Fruitcake\WeasyPrint\Support\WeasyPrintDriver;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Pontedilana\PhpWeasyPrint\Pdf;
 
@@ -65,6 +66,8 @@ class WeasyPrintProvider extends BaseServiceProvider
             return $wrapper;
         });
         $this->app->alias('weasyprint.pdf.wrapper', WeasyPrintWrapper::class);
+
+        $this->app->bind('laravel-pdf.driver.weasyprint', WeasyPrintDriver::class);
     }
 
     /**
