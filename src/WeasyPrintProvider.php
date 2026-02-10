@@ -2,18 +2,11 @@
 
 namespace Fruitcake\WeasyPrint;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Pontedilana\PhpWeasyPrint\Pdf;
 
-class WeasyPrintProvider extends BaseServiceProvider
+class WeasyPrintProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
     /**
      * Register the service provider.
      *
@@ -23,12 +16,6 @@ class WeasyPrintProvider extends BaseServiceProvider
     {
         $configPath = __DIR__ . '/../config/weasyprint.php';
         $this->mergeConfigFrom($configPath, 'weasyprint');
-    }
-
-    public function boot()
-    {
-        $configPath = __DIR__ . '/../config/weasyprint.php';
-        $this->publishes([$configPath => config_path('weasyprint.php')], 'config');
 
         $this->app->bind('weasyprint.pdf', function ($app) {
             $binary = $app['config']->get('weasyprint.pdf.binary', '/usr/local/bin/weasyprint');
@@ -42,9 +29,9 @@ class WeasyPrintProvider extends BaseServiceProvider
             }
 
             if (null === $timeout) {
-            	$weasy->disableTimeout();
+                $weasy->disableTimeout();
             }
-            
+
             return $weasy;
         });
         $this->app->alias('weasyprint.pdf', Pdf::class);
@@ -67,13 +54,11 @@ class WeasyPrintProvider extends BaseServiceProvider
         $this->app->alias('weasyprint.pdf.wrapper', WeasyPrintWrapper::class);
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
+    public function boot()
     {
-        return array('weasyprint.pdf', 'weasyprint.pdf.wrapper', WeasyPrintWrapper::class, Pdf::class);
+        if ($this->app->runningInConsole()) {
+            $configPath = __DIR__ . '/../config/weasyprint.php';
+            $this->publishes([$configPath => config_path('weasyprint.php')], 'config');
+        }
     }
 }
