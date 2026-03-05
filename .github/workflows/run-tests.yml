@@ -6,24 +6,30 @@ on:
       - main
   pull_request:
     branches:
-      - "*"
+      - '*'
 
 jobs:
   php-tests:
     runs-on: ubuntu-latest
+
     timeout-minutes: 15
+
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
       matrix:
         php: [8.4, 8.3, 8.2, 8.1]
-        laravel: [12.*, 11.*, 10.*, 9.*]
+        laravel: ['9.*', '10.*', '11.*', '12.*', '13.*']
         dependency-version: [prefer-stable]
         exclude:
           - laravel: 11.*
             php: 8.1
           - laravel: 12.*
+            php: 8.1
+          - laravel: 13.*
+            php: 8.2
+          - laravel: 13.*
             php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
@@ -34,8 +40,8 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13' 
-          cache: 'pip' # caching pip dependencies
+          python-version: '3.13'
+          cache: pip
 
       - name: Install Dependencies
         run: |
