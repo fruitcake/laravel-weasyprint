@@ -46,7 +46,7 @@
                 "Fruitcake\\WeasyPrint\\WeasyPrintProvider"
             ],
             "aliases": {
-                "WeasyPrint": "Fruitcake\\WeasyPrint\\\\Facades\\WeasyPrint"
+                "WeasyPrint": "Fruitcake\\WeasyPrint\\Facades\\WeasyPrint"
             }
         }
     },
